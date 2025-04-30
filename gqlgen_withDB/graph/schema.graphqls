@@ -1,0 +1,29 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Customer {
+  customerId: String!
+  username: String!
+  email: String!,
+  age: Int!
+  metaData: String!
+}
+
+input NewCustomer {
+  customerId: String!
+  username: String!
+  email: String!,
+  age: Int!
+  metaData: String!
+}
+
+type Query {
+  getCustomer(customerId: String!): Customer!
+  getCustomerByMetaData(metaData: String!): Customer!
+}
+
+type Mutation {
+  saveCustomer(input: NewCustomer!):Boolean!
+  createDB(tableName: String!):Boolean!
+}

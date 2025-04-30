@@ -1,0 +1,25 @@
+used: https://www.toni-develops.com/2024/02/20/graphql-server-with-gqlgen-and-postgresql/
+
+
+1. mkdir databseConnector --> create databaseConnector.go
+2. use gorm to connect and do operations on postgres DB
+3. Modify schema --> generate updated code with modified schema
+4. write schema.resolver.go
+
+
+New Learning:
+-- we can't redeclare same variable in Go like
+  var abc int = 1
+  ....
+  ...
+  var abc,err = 5
+
+  But can do like
+  abc := 7
+  ....
+  abc,err := 5, nil
+
+  --> Reasoning is to avoid accidental shadowing of variables, like 
+  unkowingly shadowing value of abc= 7 with 5. But it allows with := (strange!!!)
+  here when used := --> it declares if not already declared, if already declared then
+  just reassign new value (but must have one new variable on left side).

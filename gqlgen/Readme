@@ -1,0 +1,46 @@
+- get gqlgen module
+- initialize it (go run github.com/99designs/gqlgen init)
+- modify schema.graphqls as per requirement
+- cd to graph and generate files (update) as per new schema (go generate)
+- go to graph/schema.resolver and write code to do stuff when called api as per our schema
+- modify resolver.go with req. details (by import the model module -- ..../graph/model) ---> to match the
+  data structure usage in schema.resolver
+- go run server.go
+
+
+- How's it working???
+  1. Client call server with query or mutation.
+  2. At server (before calling the responsible function to take care of end point)
+    - (*handler.server) create server with required configurations
+    - Add or update fields to above server struct
+    - set query cache to above struct --> 
+    - enable extensions -->
+    - set the handle route (httmp routes) 
+    - start listening on the mentioned port
+  Note:
+    - /route --> takes to playground (for development only) and in there
+      can make request (which calls /query)
+    - /query --> handler function is srv, which is created using graph.NewExecutableSchema, and
+      request is taken care by the (Resolvers  of type ResolverRoot) --> (ResolverRoot is of type interface with two method signatures) -->
+      (Mutation() which returns MutationResolver) and (Query() which returns QueryResolver)
+      --> and MutationResolver is an interface with method signature (createVideo that return *model.Video, err)
+      //ly the QueryResolver
+  3. Write code to what to do in schema.resolvers.go --> createVideo (mutation(create)) and Videos((query))
+  4. How to pass request:
+    - mutation: /query
+    mutation CreateVideo {
+        createVideo(input: {title: "robo", url: "robot.com", userID: "7"}) {
+            id
+            title
+            url
+        }
+    }
+    - query
+    query Videos {
+        videos {
+            id
+            title
+            url
+        }
+    }
+  Note: call from frontend (js) code in js_client.js
